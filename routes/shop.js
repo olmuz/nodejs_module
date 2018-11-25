@@ -11,7 +11,7 @@ const products = adminData.products;
 
 
 router.get('/', (req, res, next) => {
-    res.render('shop', {prods: products, docTitle: 'My Shop'});
+    res.render('shop', {prods: products, pageTitle: 'My Shop', path: '/'});
 });
 
 module.exports = router;
