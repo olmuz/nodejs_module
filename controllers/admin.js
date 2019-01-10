@@ -34,11 +34,14 @@ exports.getEditProduct = (req, res, next) => {
   }
 
   const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      if (!product) {
+  req.user
+    .getProducts({where: {id: prodId}})
+  //Product.findById(prodId)
+    .then(products => {
+      if (!products) {
         return res.redirect('/');
       }
+      const product = products[0];
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
         path: '/admin/add-product',
@@ -71,7 +74,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  req.user
+    .getProducts()
     .then(products => {
       res.render('admin/products', {
         prods: products,
