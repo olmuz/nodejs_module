@@ -47,21 +47,21 @@ sequelize
   .sync()
   .then(result => {
     //console.log(result);
-    return User.findById(1)
-    .then(user => {
-      if (!user) {
-        return User.create({name: "Oleh", email: "test@test.com"})
-      }
-      //return Promise.resolve(user)
-      return user
-    })
-    .then(user => {
-      //console.log(user);
-      return user.createCart();
-    })
-    .then(cart => {
-      app.listen(8000);
-    })
+    return User.findById(1);
+  })
+  .then(user => {
+    if (!user) {
+      return User.create({name: "Oleh", email: "test@test.com"})
+    }
+    //return Promise.resolve(user)
+    return user
+  })
+  .then(user => {
+  //console.log(user);
+    return user.createCart();
+  })
+  .then(cart => {
+    app.listen(8000);
   })
   .catch(err => {
     console.log(err);
