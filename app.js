@@ -5,7 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -30,7 +30,6 @@ app.use((req, res, next) => {
 
 app.use('/', errorController.get404);
 
-mongoConnect(client => {
-  console.log(client);
+mongoConnect(() => {
   app.listen(8000);
 });
