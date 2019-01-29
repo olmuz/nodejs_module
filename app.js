@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false })); // yield body-parser
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findById('5c4e0aabe30f8d2398a58c61')
+  User.findById('5c50ae492caf152f6006a5bc')
     .then(user => {
-      req.user = user;
+      req.user = new User(user.name, user.email, user.cart, user._id);
       next();
     })
     .catch(err => console.log(err));
