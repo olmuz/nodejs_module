@@ -74,6 +74,14 @@ class User {
     })
   };
 
+  getOrders() {
+    const db = getDb();
+    return db
+      .collection('orders')
+      .find({"user._id": new ObjectId(this._id)})
+      .toArray()
+  }
+
   getCart() {
     const db = getDb();
     const productIds = this.cart.items.map(i => {
