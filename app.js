@@ -3,9 +3,11 @@ const express = require("express");
 
 const app = express();
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
+const config = require('config');
+const mongoConnectUrl = config.get('mongoConnectUrl');
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database').mongoConnect;
 
 const User = require('./models/user');
 
@@ -32,6 +34,8 @@ app.use(shopRoutes);
 
 app.use('/', errorController.get404);
 
-mongoConnect(() => {
-  app.listen(8000);
-});
+mongoose.connect(mongoConnectUrl)
+  .then(
+    app.listen(8000)
+  )
+  .catch(err => console.log(err));
