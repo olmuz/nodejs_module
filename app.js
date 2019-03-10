@@ -5,12 +5,18 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const config = require('config');
 const mongoConnectUrl = config.get('mongoConnectUrl');
 
 const errorController = require('./controllers/error');
 
 const User = require('./models/user');
+
+const store = new MongoDBStore({
+  uri: mongoConnectUrl,
+  collection: 'sessions'
+})
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -24,7 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'My secure secret',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: store
 }));
 
 app.use((req, res, next) => {
