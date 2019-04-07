@@ -10,6 +10,8 @@ const csrf = require('csurf');
 const config = require('config');
 const mongoConnectUrl = config.get('mongoConnectUrl');
 
+const flash = require('connect-flash');
+
 const errorController = require('./controllers/error');
 
 const User = require('./models/user');
@@ -38,6 +40,7 @@ app.use(session({
 }));
 
 app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
   if (!req.session.user) {
